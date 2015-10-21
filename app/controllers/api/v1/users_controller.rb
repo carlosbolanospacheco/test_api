@@ -4,16 +4,20 @@ class Api::V1::UsersController < Api::V1::GlobalController
 	def index
 		authorize @current_user
 		users = User.all
-		render json: users.to_json
+		users_data = []
+		users.each do |user|
+			users_data.push(copyUser(user))
+		end
+		render json: users_data, status: :ok
 	end
 
 	def create
 		authorize @current_user
 		user = User.new(create_params)
-		logger.debug(user.to_json)
 		return api_error(status: :bad_request, errors: user.errors) unless user.valid?
 		if user.save
-			render json: user.to_json, status: :created
+			single_user = copyUser(user)
+			render json: single_user, status: :created
     else
       render nothing: true, status: :bad_request
     end
@@ -22,13 +26,16 @@ class Api::V1::UsersController < Api::V1::GlobalController
 	def show
 		authorize @current_user
 		user = User.find(params[:id])
-		render json: user.to_json, status: :found
+		single_user = copyUser(user)
+		render json: single_user, status: :found
 	end
 
 	def update
 		authorize @current_user
-		if user.update(create_params)
-      render json: user.to_json, state: :ok
+		user = User.find(params[:id])
+		if user.update(update_params)
+			single_user = copyUser(user)
+      render json: single_user, state: :ok
     else
 			return api_error(status: :bad_request, errors: user.errors)
     end
@@ -37,7 +44,12 @@ class Api::V1::UsersController < Api::V1::GlobalController
 	def destroy
 		authorize @current_user
 		if User.find(params[:id]).destroy
-			render nothing: true, status: :ok
+			users = User.all
+			users_data = []
+			users.each do |user|
+				users_data.push(copyUser(user))
+			end
+			render json: users_data, status: :ok
 		else
 			return api_error(status: :bad_request, errors: user.errors)
 		end
@@ -47,6 +59,19 @@ class Api::V1::UsersController < Api::V1::GlobalController
 
 		def create_params
 			params.require(:user).permit(:email, :name, :password, :role)
+		end
+
+		def update_params
+			params.require(:user).permit(:email, :name, :role)
+		end
+
+		def copyUser(user)
+			single_user = {}
+			single_user[:id] = user[:id]
+			single_user[:name] = user[:name]
+			single_user[:email] = user[:email]
+			single_user[:role] = user.role
+			return single_user
 		end
 
 end

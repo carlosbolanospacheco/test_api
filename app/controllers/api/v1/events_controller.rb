@@ -3,8 +3,7 @@ class Api::V1::EventsController < Api::V1::GlobalController
 
 	def index
 		events = Event.where(congress_id: get_event_params[:congress_id])
-		logger.debug events
-		render json: events.to_json, status: :ok
+		render json: events, status: :ok
 	end
 
 	def show
@@ -37,9 +36,11 @@ class Api::V1::EventsController < Api::V1::GlobalController
 
 	def destroy
 		event = Event.find(params[:id])
+		congress_id = event.congress_id
 		authorize event.congress
 		if event.destroy
-			render nothing: true, status: :ok
+			events = Event.where(congress_id: congress_id)
+			render json: events, status: :ok
 		else
 			return api_error(status: :bad_request, errors: event.errors)
 		end

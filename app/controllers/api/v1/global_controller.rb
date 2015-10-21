@@ -30,6 +30,14 @@ class Api::V1::GlobalController < ApplicationController
 	    render json: { error: 'not authorized' }, status: :unauthorized
 	  end
 
+	  def checkUser?
+	  		if request.headers['Authorization']
+	  			token = request.headers['Authorization'].split('=')[1]	  			
+	  			logger.debug "Checking header token #{token}"
+        	@current_user = User.find_by(api_token: token) if token
+        end
+	  end
+
   private
   	def authenticate_user!
       logger.debug "Auth token"
