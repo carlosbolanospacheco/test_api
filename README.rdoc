@@ -9,4 +9,5 @@ The steps to run the app in a local host are:
   * git clone git@github.com:carlosbolanospacheco/test_api.git
   * cd test_api
   * bundle install
+  * rake db:schema:load
   * rails server
