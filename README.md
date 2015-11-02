@@ -58,10 +58,7 @@ If the response is right the status will be 200 (ok) and the data will be an arr
         "location": "Yellow room",
         "start_date": "2015-12-01T10:00:00.000Z",
         "duration": 1,
-        "capacity": 150,
-        "created_at": "2015-10-20T15:50:00.699Z",
-        "updated_at": "2015-10-20T16:41:07.270Z",
-        "congress_id": 5
+        "capacity": 150
     },
     {
         "id": 5,
@@ -69,10 +66,7 @@ If the response is right the status will be 200 (ok) and the data will be an arr
         "location": "Room 001",
         "start_date": "2015-12-02T09:00:00.000Z",
         "duration": 1,
-        "capacity": 50,
-        "created_at": "2015-10-20T16:07:25.606Z",
-        "updated_at": "2015-10-20T16:07:25.606Z",
-        "congress_id": 5
+        "capacity": 50
     },
     {
         "id": 6,
@@ -80,10 +74,7 @@ If the response is right the status will be 200 (ok) and the data will be an arr
         "location": "Room 005",
         "start_date": "2015-12-02T09:00:00.000Z",
         "duration": 1,
-        "capacity": 50,
-        "created_at": "2015-10-20T16:17:04.009Z",
-        "updated_at": "2015-10-20T16:17:04.009Z",
-        "congress_id": 5
+        "capacity": 50
     },
     {
         "id": 7,
@@ -91,10 +82,7 @@ If the response is right the status will be 200 (ok) and the data will be an arr
         "location": "Room 008",
         "start_date": "2015-12-02T10:00:00.000Z",
         "duration": 1,
-        "capacity": 20,
-        "created_at": "2015-10-20T16:20:14.082Z",
-        "updated_at": "2015-10-20T17:44:50.688Z",
-        "congress_id": 5
+        "capacity": 20
     }
 ]
 
