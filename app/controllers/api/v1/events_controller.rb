@@ -17,9 +17,9 @@ class Api::V1::EventsController < Api::V1::GlobalController
 		event = Event.new(create_params)
 		return api_error(status: :bad_request, errors: event.errors) unless event.valid?
 		if event.save
-			render json: event.to_json, status: :created
+			render json: event, status: :created
     else
-      render nothing: true, status: :bad_request
+      return api_error(status: :bad_request, errors: event.errors)
     end
 	end
 

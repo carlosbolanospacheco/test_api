@@ -22,25 +22,24 @@ class Api::V1::GlobalController < ApplicationController
       	puts errors.full_messages if errors.respond_to? :full_messages
     	end
     	#head status and return if errors.empty?
-    	render json: {error: 'Bad request'}, status: status and return if errors.empty?
-    	render json: errors.to_json, status: status  		
+    	render json: {errors: 'Bad request'}, status: status and return if errors.empty?
+    	render json: {errors: errors.to_json}, status: status  		
   	end
 
 	  def unauthorized!
-	    render json: { error: 'not authorized' }, status: :unauthorized
+	    render json: { errors: 'not authorized' }, status: :unauthorized
 	  end
 
 	  def checkUser?
-	  		if request.headers['Authorization']
-	  			token = request.headers['Authorization'].split('=')[1]	  			
-	  			logger.debug "Checking header token #{token}"
-        	@current_user = User.find_by(api_token: token) if token
-        end
+  		if request.headers['Authorization']
+  			token = request.headers['Authorization'].split('=')[1]	  			
+  			logger.debug "Checking header token #{token}"
+      	@current_user = User.find_by(api_token: token) if token
+      end
 	  end
 
   private
   	def authenticate_user!
-      logger.debug "Auth token"
       authenticate_token || render_unauthorized
   	end
 
@@ -52,7 +51,7 @@ class Api::V1::GlobalController < ApplicationController
 
     def render_unauthorized
       self.headers['WWW-Authenticate'] = 'Token realm="Application"'
-      render json: {:error=>'Bad credentials'}, status: :unauthorized
+      render json: {:errors=>'Bad credentials'}, status: :unauthorized
     end
 
 end
