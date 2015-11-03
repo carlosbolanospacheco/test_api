@@ -139,4 +139,4 @@ Example sentences and their returns are:
   And it's return if ok will be state 200 (ok) and will show the list of all users
 
 # Errors
-All errors are cached and the response will show an error state and, if possible, an information json message.
+All errors are catched and the response will show an error state and, if possible, an information json message.
